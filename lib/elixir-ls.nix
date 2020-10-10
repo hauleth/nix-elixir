@@ -10,6 +10,8 @@ buildMix' {
   # refresh: nix-prefetch-git https://github.com/elixir-lsp/elixir-ls.git [--rev branchName | --rev sha]
   src = fetchFromGitHub json;
 
+  mixSha256 = "1j7v56mfa087wi3x8kdcbqq0wsdiw284cwlccvxs1b60rypx5k55";
+
   dontStrip = true;
 
   buildPhase = ''
