@@ -1,8 +1,7 @@
 { stdenvNoCC, elixir, hex, rebar, rebar3, git, cacert }:
 
 let
-  fetchMixDeps =
-    { name ? "mix", src, sha256, mixEnv ? "prod" }:
+  fetchMixDeps = { name ? "mix", src, sha256, mixEnv ? "prod" }:
     stdenvNoCC.mkDerivation {
       name = "${name}-deps";
 
@@ -24,7 +23,9 @@ let
       '';
 
       buildPhase = ''
-        mix deps.get
+        mix deps.get ${
+          stdenvNoCC.lib.optionalString (mixEnv == "prod") "--only-prod"
+        }
         find "$out" -path '*/.git/*' -a ! -name HEAD -exec rm -rf {} +
       '';
 
