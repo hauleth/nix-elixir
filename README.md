@@ -13,7 +13,7 @@ let
   packages = nixpkgs.beam.packagesWith nixpkgs.beam.interpreters.erlang;
 in
 
-packages.buildMix {
+packages.buildMix' {
   pname = "my-project";
   version = "1.2.3";
 }
