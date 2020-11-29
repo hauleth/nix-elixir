@@ -23,9 +23,7 @@ let
       '';
 
       buildPhase = ''
-        mix deps.get ${
-          stdenvNoCC.lib.optionalString (mixEnv == "prod") "--only-prod"
-        }
+        mix deps.get --only ${mixEnv}
         find "$out" -path '*/.git/*' -a ! -name HEAD -exec rm -rf {} +
       '';
 
