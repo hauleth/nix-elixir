@@ -1,6 +1,7 @@
 {
     "owner": "erlang-ls",
     "repo": "erlang_ls",
-    "rev": "64313bba94e0b5877ffe99ce169478a12d8da049",
-    "sha256": "1jp4nrb4ns21jga7ysbqpwpkkmmsz90shcgk8qr4ibi4k0ly98ax"
+    "rev": "d87b42b61fd907e042893a203cc6bd30a153c894",
+    "sha256": "0nky2xvnd5xqgh340m4lp3gndvrm313fhfrj36pj0f7f9qgpsiam",
+    "fetchSubmodules": true
 }

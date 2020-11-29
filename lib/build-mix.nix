@@ -1,4 +1,4 @@
-{ stdenv, elixir, hex, rebar, rebar3, fetchMixDeps }:
+{ stdenv, elixir, hex, rebar, fetchMixDeps, erlang, callPackage }:
 
 { name ? "${args.pname}-${args.version}"
 , mixSha256 ? null
@@ -16,10 +16,11 @@ let
     inherit src name mixEnv;
     sha256 = mixSha256;
   };
+  rebar3 = callPackage ./rebar {};
 in stdenv.mkDerivation (args // {
   dontStrip = true;
 
-  nativeBuildInputs = nativeBuildInputs ++ [ hex elixir ];
+  nativeBuildInputs = nativeBuildInputs ++ [ hex elixir erlang ];
 
   MIX_ENV = mixEnv;
   HEX_OFFLINE = 1;
@@ -27,17 +28,13 @@ in stdenv.mkDerivation (args // {
   MIX_REBAR3 = "${rebar3}/bin/rebar3";
 
   postUnpack = ''
-    runHook preConfigure
-
     export HEX_HOME="$TMPDIR/hex"
     export MIX_HOME="$TMPDIR/mix"
-    export REBAR_GLOBAL_CONFIG_DIR="$TMPDIR/rebar"
-    export REBAR_CACHE_DIR="$TMPDIR/rebar-cache"
+    export REBAR_GLOBAL_CONFIG_DIR="$TMPDIR/rebar3"
+    export REBAR_CACHE_DIR="$TMPDIR/rebar3.cache"
     export MIX_DEPS_PATH="$TMPDIR/deps"
 
-    cp --no-preserve=all -R "${mixDeps}" "$MIX_DEPS_PATH"
-
-    runHook postConfigure
+    cp --no-preserve=mode -R "${mixDeps}" "$MIX_DEPS_PATH"
   '' + (args.postUnpack or "");
 
   configurePhase = args.configurePhase or ''

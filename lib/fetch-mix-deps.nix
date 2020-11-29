@@ -3,7 +3,7 @@
 let
   fetchMixDeps = { name ? "mix", src, sha256, mixEnv ? "prod" }:
     stdenvNoCC.mkDerivation {
-      name = "${name}-deps";
+      name = "mix-deps" + (if name != null then "-${name}" else "");
 
       nativeBuildInputs = [ elixir hex git cacert ];
 
