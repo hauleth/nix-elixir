@@ -31,6 +31,6 @@ buildMix' {
     substituteInPlace $out/lib/launch.sh \
       --replace "ERL_LIBS=\"\$SCRIPTPATH:\$ERL_LIBS\"" \
                 "ERL_LIBS=$out/lib:\$ERL_LIBS" \
-      --replace "elixir -e" "${elixir}/bin/elixir -e"
+      --replace "exec elixir" "exec ${elixir}/bin/elixir"
   '';
 }
