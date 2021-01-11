@@ -9,9 +9,11 @@ let
     elixir-ls = packages.callPackage lib/elixir-ls.nix { inherit buildMix'; };
     erlang-ls = packages.callPackage lib/erlang-ls.nix {};
   };
+  packages = super.lib.attrsets.mapAttrs (name: _: packagesWith super.beam.interpreters.${name}) super.beam.packages;
 in {
   beam = super.beam // {
-    inherit packagesWith
-    packages = super.lib.attrsets.mapAttrs (name: _: packagesWith super.beam.interpreters.${name}) super.beam.packages;
+    inherit packagesWith packages;
   };
+
+  inherit (packages.erlang) elixir-ls erlang-ls;
 }
