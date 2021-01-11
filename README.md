@@ -10,10 +10,7 @@ let
   nixpkgs = import <nixpkgs> {
     overlays = [ (import mixOverlay) ];
   };
-  packages = nixpkgs.beam.packagesWith nixpkgs.beam.interpreters.erlang;
-in
-
-packages.buildMix' {
+in nixpkgs.beam.packages.erlang.buildMix' {
   pname = "my-project";
   version = "1.2.3";
 }
