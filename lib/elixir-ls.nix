@@ -7,6 +7,9 @@ buildMix' {
   pname = "elixir-ls";
   version = json.rev;
 
+  # temporary fix for elixir-lang/elixir#10517
+  impureMixRebar = true;
+
   # refresh: nix-prefetch-git https://github.com/elixir-lsp/elixir-ls.git [--rev branchName | --rev sha]
   src = fetchFromGitHub json;
 

@@ -1,4 +1,4 @@
-{ stdenv, elixir, hex, rebar, fetchMixDeps, erlang, callPackage }:
+{ stdenv, elixir, hex, rebar, rebar3, fetchMixDeps, erlang, callPackage }:
 
 { name ? "${args.pname}-${args.version}"
 , mixSha256 ? null
@@ -9,6 +9,7 @@
 , buildType ? "release"
 , meta ? {}
 , mixEnv ? "prod"
+, impureMixRebar ? false
 , ... } @ args:
 
 let
@@ -16,7 +17,6 @@ let
     inherit src name mixEnv;
     sha256 = mixSha256;
   };
-  rebar3 = callPackage ./rebar {};
 in stdenv.mkDerivation (args // {
   dontStrip = true;
 
@@ -24,8 +24,13 @@ in stdenv.mkDerivation (args // {
 
   MIX_ENV = mixEnv;
   HEX_OFFLINE = 1;
-  MIX_REBAR = "${rebar}/bin/rebar";
-  MIX_REBAR3 = "${rebar3}/bin/rebar3";
+
+  setRebar = if impureMixRebar
+             then "mix local.rebar --force"
+             else ''
+             export MIX_REBAR="${rebar}/bin/rebar"
+             export MIX_REBAR3="${rebar3}/bin/rebar3"
+             '';
 
   postUnpack = ''
     export HEX_HOME="$TMPDIR/hex"
@@ -33,6 +38,8 @@ in stdenv.mkDerivation (args // {
     export REBAR_GLOBAL_CONFIG_DIR="$TMPDIR/rebar3"
     export REBAR_CACHE_DIR="$TMPDIR/rebar3.cache"
     export MIX_DEPS_PATH="$TMPDIR/deps"
+
+    $setRebar
 
     cp --no-preserve=mode -R "${mixDeps}" "$MIX_DEPS_PATH"
   '' + (args.postUnpack or "");
