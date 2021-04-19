@@ -1,4 +1,4 @@
-{ stdenvNoCC, elixir, hex, rebar, rebar3, git, cacert }:
+{ stdenvNoCC, lib, elixir, hex, rebar, rebar3, git, cacert }:
 
 let
   fetchMixDeps = { name ? "mix", src, sha256, mixEnv ? "prod" }:
@@ -33,6 +33,6 @@ let
       outputHashMode = "recursive";
       outputHash = sha256;
 
-      impureEnvVars = stdenvNoCC.lib.fetchers.proxyImpureEnvVars;
+      impureEnvVars = lib.fetchers.proxyImpureEnvVars;
     };
 in fetchMixDeps
