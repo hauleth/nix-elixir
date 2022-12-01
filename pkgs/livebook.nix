@@ -1,5 +1,4 @@
 { lib
-, mkDerivation
 , makeWrapper
 , rebar3
 , mixRelease
