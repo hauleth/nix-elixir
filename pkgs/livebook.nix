@@ -38,7 +38,7 @@ let
       mv ./livebook $out/bin
 
       wrapProgram $out/bin/livebook \
-        --prefix PATH : ${lib.makeBinPath [ elixir ]} \
+        --suffix PATH : ${lib.makeBinPath [ elixir ]} \
         --set MIX_REBAR3 ${rebar3}/bin/rebar3
     '';
   };
