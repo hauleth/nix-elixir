@@ -11,7 +11,7 @@
 let
   livebook = mixRelease rec {
     pname = "livebook";
-    version = "0.8.0";
+    version = "0.10.0";
 
     inherit elixir;
 
@@ -23,13 +23,13 @@ let
       url = "https://github.com/livebook-dev/livebook.git";
       rev = "v${version}";
 
-      sha256 = "0HsJGve4sLQ9cXpwwmMyo4R/wHaCwr22N32OX7O//oo=";
+      sha256 = "sha256-Bp1CEvVv5DPDDikRPubsG6p4LLiHXTEXE+ZIip3LsGA=";
     };
 
     mixFodDeps = fetchMixDeps {
       pname = "mix-deps-${pname}";
       inherit src version;
-      sha256 = "tWJ4Rdv4TAY/6XI8cI7/GUfRXW34vrx2ZXlJYxDSGsU=";
+      sha256 = "sha256-qFLCWr7LzI9WNgj0AJO3Tw7rrA1JhBOEpX79RMjv2nk=";
     };
 
     installPhase = ''
