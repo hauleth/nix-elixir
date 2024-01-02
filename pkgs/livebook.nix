@@ -1,23 +1,23 @@
-{ lib
-, makeWrapper
-, rebar3
-, mixRelease
-, elixir
-, erlang
-, fetchMixDeps
-, fetchgit
-, ...
-}:
-let
+{
+  lib,
+  makeWrapper,
+  rebar3,
+  mixRelease,
+  elixir,
+  erlang,
+  fetchMixDeps,
+  fetchgit,
+  ...
+}: let
   livebook = mixRelease rec {
     pname = "livebook";
     version = "0.12.1";
 
     inherit elixir;
 
-    buildInputs = [ erlang ];
+    buildInputs = [erlang];
 
-    nativeBuildInputs = [ makeWrapper ];
+    nativeBuildInputs = [makeWrapper];
 
     src = fetchgit {
       url = "https://github.com/livebook-dev/livebook.git";
@@ -38,9 +38,9 @@ let
       mv ./livebook $out/bin
 
       wrapProgram $out/bin/livebook \
-        --suffix PATH : ${lib.makeBinPath [ elixir ]} \
+        --suffix PATH : ${lib.makeBinPath [elixir]} \
         --set MIX_REBAR3 ${rebar3}/bin/rebar3
     '';
   };
 in
-livebook
+  livebook
